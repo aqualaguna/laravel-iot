@@ -1,0 +1,19 @@
+ip: 192.168.10.10
+memory: 2048
+cpus: 1
+provider: virtualbox
+authorize: ~/.ssh/id_rsa.pub
+keys:
+    - ~/.ssh/id_rsa
+folders:
+    -
+        map: /var/www/html/passport
+        to: /home/vagrant/Code/passport
+sites:
+    -
+        map: passport.app
+        to: /home/vagrant/Code/passport/public
+databases:
+    - homestead
+name: passport
+hostname: passport
