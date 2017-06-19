@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Jobs\sendMqttCommand;
+use DB;
+use Mockery\Exception;
 use Mosquitto\Client as MosquittoClient;
 use App\device;
 use App\User;
@@ -20,7 +22,16 @@ class DeviceController extends Controller
 	 */
 	public function getByUser(Request $request)
     {
-		return $request->user()->devices()->get();
+//	    $users = DB::table('users')
+//	               ->whereDate('created_at', '2016-12-31')
+//	               ->get();
+    	$user = $request->user()->id;
+	    return device::with(['graph','message'=>function($query){
+		    $query->where('topic','/data');
+//	    	$query->whereDate('created_at', DB::raw('CURDATE()'));
+	    	$query->orderBy('created_at','DESC');
+	    	$query->limit(30);
+	    }])->where('user_id',$user)->get();
     }
 
 	/**
@@ -54,11 +65,23 @@ class DeviceController extends Controller
 	 */
 	public function update(Request $request)
     {
+	    var_dump(count($request->all()));
     	if(count($request->all())==1)
 	    {
-	    	var_dump($request->all());
+//		    var_dump($request->all()[0]["last_value"]);
+//		    var_dump($request->last_value);
+//		    var_dump($request->get('last_value'));
+//		    var_dump($request["last_value"]);
+		    var_dump($request);
 		    $dev = device::find($request["id"]);
-		    $dev->last_value = $request["last_value"];
+		    try{
+		    	$dev->last_value = $request["last_value"];
+		    }
+		    catch (Exception $e)
+		    {
+		        echo $e->getMessage();
+		        return;
+		    }
 		    $dev->save();
 	    }
 	    else {

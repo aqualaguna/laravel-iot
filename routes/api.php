@@ -20,8 +20,12 @@ Route::group(['middleware'=>'auth:api'],function(){
 	Route::post('/device','DeviceController@add');//avaible api
 	Route::put('/device','DeviceController@update');
 	Route::delete('/device','DeviceController@delete');
-
 	Route::post('/sendcmd','DeviceController@sendcmd');
+
+	Route::post('graph','GraphController@add');
+	Route::delete('graph','GraphController@delete');
+	Route::get('graph','GraphController@getByUser');
+
 });
 
 

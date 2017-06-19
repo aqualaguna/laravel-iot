@@ -54,7 +54,6 @@
             {
                 if(typeof(value)=="boolean"){
                     this.$emit('change',{id:this.datum.id,val:value});
-                    console.log('changed'+value)
                 }
                 else
                 {

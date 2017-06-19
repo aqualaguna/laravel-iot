@@ -15,4 +15,8 @@ class device extends Model
     {
         return $this->hasMany('App\MqttMessage');
     }
+	public function graph()
+	{
+		return $this->hasOne(Graph::class);
+	}
 }

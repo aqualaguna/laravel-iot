@@ -1,6 +1,6 @@
 <template>
     <div>
-        <card-modal :visible="showModal" title="add a Component" transition="bounce" @close="showModal=false" @cancel="showModal=false" @ok="addDevice">
+        <card-modal :visible="showModal" title="add a Component" transition="bounce" ok-text="Yes" cancel-text="No" @close="closeModalBasic" @cancel="closeModalBasic" @ok="addDevice">
             <div class="content has-text-centered">
                 <tabs @tab-selected="changeTab" animation="slide">
                     <tab-pane label="Button">Button</tab-pane>
@@ -74,19 +74,21 @@
                     'name':this.objectName
                 })
                     .then((response)=>{
+                        this.objectName=''
+                        this.selectedTab=-1
                         this.openNotificationWithType('success','Operation Success','added to the database');
                         this.$emit('added',response.data);
                     })
                     .catch((error)=>{
                         this.openNotificationWithType('danger','Api Call Failed',error.message);
                     });
-                this.showModal=false;
+                this.objectName=''
+                this.selectedTab=-1
             },
             openNotificationWithType (type,title,msg) {
                 this.notification(type,title,msg);
             }
 
-        },
-        computed: {}
+        }
     }
 </script>

@@ -18,6 +18,11 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->boolean('is_lifetime')->default(false);
+            $table->decimal('credit')->default(0);
+            $table->integer('api_call_count')->default(-1);
+            $table->timestamp('subcribe_at');
+            $table->string('subcribe_type')->default('trial');
             $table->rememberToken();
             $table->timestamps();
         });

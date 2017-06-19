@@ -19,7 +19,10 @@ import {Tabs, TabPane} from 'vue-bulma-tabs';
 import Notification from 'vue-bulma-notification'
 
 const NotificationComponent = Vue.extend(Notification)
+import Chartkick from 'chartkick'
+import VueChartkick from 'vue-chartkick'
 
+Vue.use(VueChartkick, { Chartkick })
 const openNotification = (propsData = {
     title: '',
     message: '',
@@ -33,6 +36,7 @@ const openNotification = (propsData = {
         propsData
     })
 }
+Vue.component('graph', require('./components/Graph.vue'));
 Vue.component('add-component', require('./components/addComponent.vue'));
 Vue.component('dashboard', require('./components/dashboard.vue'));
 Vue.component('passport-clients',
@@ -51,6 +55,7 @@ const app = new Vue({
     data:{
         tabIndex:-1,
         componentList:[],
+        isInitial:true,
     },
     el: '#app',
     methods:{
@@ -101,19 +106,22 @@ const app = new Vue({
             this.componentList.splice($index,1);
             axios.delete('/device',{
                 id:item.id
-            }).then(()=>this.openNotificationWithType('success','Success!!!','success deleting item'))
-                .catch((error)=>this.openNotificationWithType('danger','Api Call Failed!',error.message));
+            }).then(()=>this.openNotificationWithType('is-success','Success!!!','success deleting item'))
+                .catch((error)=>this.openNotificationWithType('is-danger','Api Call Failed!',error.message));
         }
     },
-    created()
+    beforeCreate()
     {
+        // axios.get('api/graph/').then(({data})=>console.log(data));
+        // axios.get('api/graph/').then((response)=>console.log(response.data));
             axios.get('api/device/').then((response)=>{
                 response.data.forEach((data)=>{
                     this.componentList.push(data);
-                    console.log(data.last_value);
+                    console.log(data);
                 });
-
+                this.isInit=false;
             })
                 .catch((error)=>this.openNotificationWithType('danger','Api Call Failed!',error.message));
+
     },
 });

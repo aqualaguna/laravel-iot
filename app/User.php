@@ -34,4 +34,8 @@ class User extends Authenticatable
     {
         return $this->devices()->save($dev);
     }
+    public function graph()
+    {
+        return $this->hasMany(Graph::class);
+    }
 }

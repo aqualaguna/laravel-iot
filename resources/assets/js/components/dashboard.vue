@@ -5,7 +5,8 @@
                 <device :datum="element" @change="update" @remove="removeItem"></device>
             </div>
         </draggable>
-        <card-modal :visible="showModal" title="Confirmation" transition="bounce" @close="showModal=false" @cancel="showModal=false" @ok="ok" ok-text="Yes" cancel-text="No">
+        <card-modal :visible="showModal" title="Confirmation" transition="bounce" @close="showModal=false"
+                    @cancel="showModal=false" @ok="ok" ok-text="Yes" cancel-text="No">
             <div class="content has-text-centered">
                 Are You Sure want to delete this item?
             </div>
@@ -23,32 +24,40 @@
             datalist: {
                 type: Array,
             },
+            isInit: {
+                type: Boolean,
+                default: false,
+            }
 
         },
         components: {
-            draggable, device,CardModal,
+            draggable, device, CardModal,
         },
         data(){
             return {
-                removeItemId:null,
-                showModal:false,
+                removeItemId: null,
+                showModal: false,
             }
         },
         mounted() {
         },
-        methods:{
+        methods: {
             update(evt)
             {
-                this.$emit('change',evt);
+                if (!this.isInit) {
+                    this.$emit('change', evt);
+                }
             },
             removeItem(item)
             {
-                this.removeItemId=item.id;
-                this.showModal=true;
+                this.removeItemId = item.id;
+                this.showModal = true;
             },
             ok()
             {
-                this.$emit('remove',{id:this.removeItemId});
+
+                this.$emit('remove', {id: this.removeItemId});
+
             }
 
         }
