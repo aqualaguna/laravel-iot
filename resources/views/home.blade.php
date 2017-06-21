@@ -10,6 +10,7 @@
                     <tab-pane label="Graph"></tab-pane>
                     <tab-pane label="OAuth2"></tab-pane>
                     <tab-pane label="Personal Access Token"></tab-pane>
+                    <tab-pane label="Subcribe"></tab-pane>
 
                     <div v-show="tabSelect(0)">
                         <add-component :notification="openNotificationWithType" @added="dashboardAdd"></add-component>
@@ -17,7 +18,9 @@
                     </div>
 
                     <div v-show="tabSelect(1)">
-                        <graph :notification="openNotificationWithType" :datalist="componentList"></graph>
+                        <div class="box">
+                            <graph :notification="openNotificationWithType" :datalist="componentList"></graph>
+                        </div>
                     </div>
 
                     <div v-show="tabSelect(2)">
@@ -28,6 +31,9 @@
                     </div>
                     <div v-show="tabSelect(3)">
                         <passport-personal-access-tokens></passport-personal-access-tokens>
+                    </div>
+                    <div v-show="tabSelect(4)">
+                        <subcribe :notification="openNotificationWithType"></subcribe>
                     </div>
                 </tabs>
 

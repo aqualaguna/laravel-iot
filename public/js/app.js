@@ -10994,6 +10994,7 @@ var openNotification = function openNotification() {
     });
 };
 Vue.component('graph', __webpack_require__(79));
+Vue.component('subcribe', __webpack_require__(117));
 Vue.component('add-component', __webpack_require__(80));
 Vue.component('dashboard', __webpack_require__(81));
 Vue.component('passport-clients', __webpack_require__(85));
@@ -50160,6 +50161,165 @@ module.exports = function(module) {
 
 module.exports = __webpack_require__(16);
 
+
+/***/ }),
+/* 116 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        notification: {
+            type: Function
+        }
+    },
+    data: function data() {
+        return {
+            credit: 0,
+            selected: null
+
+        };
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        axios.get('/api/user').then(function (_ref) {
+            var data = _ref.data;
+            _this.credit = data.credit;
+        }).catch(function (error) {
+            return console.log(error.message);
+        });
+    },
+
+    methods: {
+        setSubcribe: function setSubcribe() {
+            var _this2 = this;
+
+            axios.post('/api/subcribe', {
+                subcribe_type: this.selected
+            }).then(function () {
+                return _this2.openNotificationWithType('is-success', 'Operation Complete', 'Subcribe has been set');
+            }).catch(function (error) {
+                return _this2.openNotificationWithType('is-success', 'Api Call Failed!', error.message);
+            });
+        },
+        openNotificationWithType: function openNotificationWithType(type, title, msg) {
+            this.notification(type, title, msg);
+        }
+    }
+});
+
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(116),
+  /* template */
+  __webpack_require__(118),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/var/www/html/passport/resources/assets/js/components/Subcribe.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Subcribe.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-161b8443", Component.options)
+  } else {
+    hotAPI.reload("data-v-161b8443", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 118 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "box"
+  }, [_c('p', {
+    staticClass: "control"
+  }, [_c('label', {
+    staticClass: "label"
+  }, [_vm._v("Credit :" + _vm._s(_vm.credit))]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.selected),
+      expression: "selected"
+    }],
+    staticClass: "select",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.selected = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "monthly"
+    }
+  }, [_vm._v("monthly")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "api_call"
+    }
+  }, [_vm._v("per API Call")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "yearly"
+    }
+  }, [_vm._v("yearly")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "lifetime"
+    }
+  }, [_vm._v("life time")])]), _vm._v(" "), _c('button', {
+    staticClass: "button is-primary",
+    on: {
+      "click": _vm.setSubcribe
+    }
+  }, [_vm._v("set")])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-161b8443", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

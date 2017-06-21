@@ -37,6 +37,7 @@ const openNotification = (propsData = {
     })
 }
 Vue.component('graph', require('./components/Graph.vue'));
+Vue.component('subcribe', require('./components/Subcribe.vue'));
 Vue.component('add-component', require('./components/addComponent.vue'));
 Vue.component('dashboard', require('./components/dashboard.vue'));
 Vue.component('passport-clients',

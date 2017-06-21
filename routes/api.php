@@ -16,6 +16,7 @@ Route::group(['middleware'=>'auth:api'],function(){
 	Route::get('/user',function (Request $request) {
 		return $request->user();
 	});
+	Route::post('subcribe','UserController@update');
 	Route::get('/device','DeviceController@getByUser'); //avaible api
 	Route::post('/device','DeviceController@add');//avaible api
 	Route::put('/device','DeviceController@update');
